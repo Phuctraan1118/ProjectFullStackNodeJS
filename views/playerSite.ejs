@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include ('./patials/head') %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Shantell+Sans:wght@300&display=swap"
+        rel="stylesheet">
+
+    <body style="height: 100vh;">
+        <!-- popup -->
+
+        <div id="popup" class="modal">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head" style="background-color: hsla(0, 0%, 7%, 0.932);">
+                    <p class="modal-card-title" style="text-align: center; font-weight: 700; color: aliceblue;">ADD NEW
+                        PLAYER
+                    </p>
+                    <button class="delete" aria-label="close"
+                        onclick="document.querySelector('#popup').classList.remove('is-active')"></button>
+                </header>
+
+                <section class="modal-card-body">
+
+                    <form method="post" action="/players" enctype="multipart/form-data">
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <label class="label">Name</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input is-info" name="name" type="text" placeholder="e.g. Messi"
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <label class="label">Image</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control">
+                                        <div class="file has-name is-boxed">
+                                            <label class="file-label">
+                                                <input class="file-input" type="file" name="file" required>
+                                                <span class="file-cta">
+                                                    <span class="file-icon">
+                                                        <i class="fas fa-upload"></i>
+                                                    </span>
+                                                    <span class="file-label">
+                                                        Choose a file…
+                                                    </span>
+                                                </span>
+                                                <span class="file-name">
+                                                    No file selected
+                                                </span>
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <label class="label">Career</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field is-narrow">
+                                    <div class="control">
+                                        <div class="select is-fullwidth">
+                                            <select name="career">
+                                                <%for (let club of clubList){ %>
+                                                    <option value="<%= club.name %>">
+                                                        <%= club.name %>
+                                                    </option>
+                                                    <% } %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <label class="label">Position</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field is-narrow">
+                                    <div class="control">
+                                        <div class="select is-fullwidth">
+                                            <select name="position">
+                                                <%for (let position of positionList){ %>
+                                                    <option value="<%= position.name %>">
+                                                        <%= position.name %>
+                                                    </option>
+                                                    <% } %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <label class="label">Goals</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input is-info" name="goals" type="number"
+                                            placeholder="Number of goals" required>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <label class="label">Nation</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field is-narrow">
+                                    <div class="control">
+                                        <div class="select is-fullwidth">
+                                            <select name="nation">
+                                                <%for (let nation of nationsList){ %>
+                                                    <option value="<%= nation._id %>">
+                                                        <%= nation.name %>
+                                                    </option>
+                                                    <% } %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal"
+                            style="display: flex; justify-content: center; align-items: center;">
+                            <div class="field-label is-normal">
+                                <label class="label" style="padding-bottom: 10px;">isCaptain</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="isCaptain" value="true">
+                                            Yes, I am a captain
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal" style="margin-left: 120px; ">
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control">
+                                        <button class="button is-primary" type="submit"
+                                            style="font-weight: 700; color: aliceblue; background-color: black;">
+                                            Create
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+        <div style="margin-top: 100px;">
+            <% if(success_msg !='' ){ %>
+                <article class="message is-success is-small">
+                    <div class="alert alert-danger alert-dismissible"
+                        style="font-size:20px; width: 250px; height: 30px; text-align: center;" role="alert">
+                        <%= success_msg %>
+                    </div>
+                    <% } %>
+                        <% if(error_msg !='' ){ %>
+                            <div class="alert alert-danger alert-dismissible" style="color:red;" role="alert">
+                                <%= error_msg %>
+                            </div>
+                            <% } %>
+
+                                <% if(error !='' ){ %>
+                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                        <%= error %>
+                                    </div>
+                </article>
+                <% } %>
+
+
+        </div>
+        <!-- table content -->
+        <div class="container is-fluid" style="display: flex; justify-content: center; padding-top: 100px;">
+            <div>
+                <!-- <table class="table align-middle mb-0 bg-white">
+                    <thead class="bg-light">
+
+                        <tr>
+                            <th style="text-align: center;">Image</th>
+                            <th style="text-align: center;">Name</th>
+                            <th style="text-align: center;">Carrer</th>
+                            <th style="text-align: center;">Postion</th>
+                            <th style="text-align: center;">Goals</th>
+                            <th style="text-align: center;">Nation</th>
+                            <th style="text-align: center;">isCaptain</th>
+                            <th style="text-align: center;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% players.forEach(function(player) { %>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt=""
+                                            style="width: 45px; height: 45px" class="rounded-circle" />
+                                        <div class="ms-3">
+                                            <p class="fw-bold mb-1">
+                                                <%= player.name %>
+                                            </p>
+                                            <p class="text-muted mb-0">
+                                                <%= player.career %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class="fw-normal mb-1">
+                                        <%= player.position %>
+                                    </p>
+                                    <p class="text-muted mb-0">
+                                        <%= player.goals %>
+                                    </p>
+                                </td>
+                                <td>
+                                    <%= player.nation.name %>
+                                </td>
+                                <td>
+                                <td>
+                                    <%=player.isCaptain===true ? 'Captain' : 'No' %>
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <div class="dropdown-trigger">
+                                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
+                                                <span class="icon ">
+                                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                            <div class="dropdown-content" style="width: 120px">
+                                                <a class="dropdown-item" href="/players/edit/<%=player.id %>"><i
+                                                        class="fa-solid fa-pencil"
+                                                        style="margin-left: 6px; margin-right: 10px;"></i>Edit</a>
+                                                <a class="dropdown-item" href="/players/delete/<%=player.id %>"
+                                                    onclick="return confirm('Are you sure ???')"><i
+                                                        class="fa-solid fa-trash-can"
+                                                        style="margin-left: 6px; margin-right: 10px;"></i>Delete</button></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }) %>
+
+                    </tbody>
+                </table> -->
+                <a class="button btn btn1" style="position: fixed; bottom: 0; right: 0;"
+                    onClick="document.querySelector('#popup').classList.add('is-active')">
+                    New Player
+                </a>
+
+                <table style="background-color: rgba(0, 0, 0, 0.116);" id="mytable"
+                    class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth"
+                    style="width: 1000px; border-radius: 15px;">
+                    <thead style="height: 40px; background-color: none; ">
+                        <tr>
+                            <th style="text-align: center; border-radius: 15px; border-bottom: 1px;">Image</th>
+                            <th style="text-align: center; border-radius: 15px;">Name</th>
+                            <th style="text-align: center; border-radius: 15px;">Carrer</th>
+                            <th style="text-align: center; border-radius: 15px;">Postion</th>
+                            <th style="text-align: center; border-radius: 15px;">Goals</th>
+                            <th style="text-align: center; border-radius: 15px;">Nation</th>
+                            <th style="text-align: center; border-radius: 15px;">isCaptain</th>
+                            <th style="text-align: center; border-radius: 15px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody style="text-align: center;">
+                        <% players.forEach(function(player) { %>
+                            <tr style="background-color: rgba(0, 0, 0, 0.192); color: aliceblue;">
+                                <td style="display: flex; align-items: center; justify-content: center;">
+                                    <figure class="image is-140x160">
+                                        <img src=<%=player.image %> >
+                                    </figure>
+                                </td>
+                                <td style="padding-top: 30%; font-family: 'Cormorant Garamond', serif;
+                                font-family: 'Shantell Sans', cursive; font-weight: 700; font-size: 20px;">
+                                    <%= player.name %>
+                                </td>
+                                <td style=" padding-top: 30%; font-family: 'Cormorant Garamond' , serif;
+                                    font-family: 'Shantell Sans' , cursive; font-weight: 700; font-size: 20px;">
+                                    <%= player.career %>
+                                </td>
+                                <td style=" padding-top: 30%; font-family: 'Cormorant Garamond' , serif;
+                                    font-family: 'Shantell Sans' , cursive; font-weight: 700; font-size: 20px;">
+                                    <%= player.position %>
+                                </td>
+                                <td style="padding-top: 30%; font-family: 'Cormorant Garamond', serif;
+                                font-family: 'Shantell Sans', cursive; font-weight: 700; font-size: 20px;">
+                                    <%= player.goals %>
+                                </td>
+                                <td style=" padding-top: 30%; font-family: 'Cormorant Garamond' , serif;
+                                    font-family: 'Shantell Sans' , cursive; font-weight: 700; font-size: 20px;">
+                                    <%= player.nation.name %>
+                                </td>
+                                <td style="padding-top: 30%; font-family: 'Cormorant Garamond', serif;
+                                font-family: 'Shantell Sans', cursive; font-weight: 700; font-size: 20px;">
+                                    <%=player.isCaptain===true ? 'Captain' : 'No' %>
+
+                                </td>
+                                <td style=" padding-top: 30%;">
+                                    <div class="dropdown">
+                                        <div class="dropdown-trigger">
+                                            <button style="background-color: gray; color: aliceblue;" class="button"
+                                                aria-haspopup="true" aria-controls="dropdown-menu3">
+                                                <span class="icon ">
+                                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                            <div class="dropdown-content">
+                                                <a class="dropdown-item" style="padding:0%; padding-bottom:5px;"
+                                                    href="/players/edit/<%=player.id %>"><i
+                                                        class="fa-solid fa-pencil"></i>Edit</a>
+                                                <a class="dropdown-item" style="padding:0%;" href="
+                                                    /players/delete/<%=player.id %>"
+                                                    onclick="return confirm('Are you sure ???')"><i
+                                                        class="fa-solid fa-trash-can"
+                                                        style="margin-left: 6px; margin-right: 10px;"></i>Delete</button></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+
+
+
+            </div>
+
+        </div>
+    </body>
+    <script>
+
+        $(document).ready(function () {
+            $('#mytable').DataTable();
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get all "dropdown" elements
+            var dropdowns = Array.prototype.slice.call(document.querySelectorAll('.dropdown'), 0);
+
+            // Loop through all dropdowns and bind click event
+            dropdowns.forEach(function (dropdown) {
+                dropdown.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    dropdown.classList.toggle('is-active');
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function (event) {
+                closeDropdowns();
+            });
+
+            function closeDropdowns() {
+                dropdowns.forEach(function (dropdown) {
+                    dropdown.classList.remove('is-active');
+                });
+            }
+        });
+        //   file
+        document.addEventListener('DOMContentLoaded', () => {
+            const fileInput = document.querySelector('.file-input');
+            const fileName = document.querySelector('.file-name');
+
+            fileInput.addEventListener('change', () => {
+                const file = fileInput.files[0];
+                if (file) {
+                    fileName.textContent = file.name;
+                } else {
+                    fileName.textContent = 'No file selected';
+                }
+            });
+        });
+    </script>
+    <style>
+        html,
+        body {
+            background-image: url("https://digitalhub.fifa.com/m/37d3f7f05a05f269/original/gpebymowybmgyiw1u3aj-jpg.jpg");
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+
+        }
+
+        .btn {
+            border: none;
+            color: white;
+            padding: 0px 32px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 10px;
+
+        }
+
+        .btn1 {
+            background-color: rgba(128, 128, 128, 0.418);
+        }
+
+        .btn1:hover {
+            background-color: gray;
+        }
+
+        /* Green */
+        .btn2 {
+            background-color: #008CBA;
+        }
+
+        /* Blue */
+    </style>
+
+</html>

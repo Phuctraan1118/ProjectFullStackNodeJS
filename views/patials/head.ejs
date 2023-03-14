@@ -1,0 +1,101 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    <script src="https://kit.fontawesome.com/589ebc73ef.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/js/bulma.min.js"
+        integrity="sha512-XSL8md+KzAg/ysd1EBcvzQx+8keNkzJ1pogDe+bJN9P5/RW+5c5v5d6Am++F6fmnt8wpD22fCaC/MP1M48hRtg=="
+        crossorigin="anonymous"></script>
+</head>
+<nav class="navbar" style="background: rgb(0,0,0);
+background: -moz-linear-gradient(9deg, rgba(0,0,0,1) 0%, rgba(4,4,4,0.6222864145658263) 52%, rgba(6,6,6,0.9248074229691877) 100%);
+background: -webkit-linear-gradient(9deg, rgba(0,0,0,1) 0%, rgba(4,4,4,0.6222864145658263) 52%, rgba(6,6,6,0.9248074229691877) 100%);
+background: linear-gradient(9deg, rgba(0,0,0,1) 0%, rgba(4,4,4,0.6222864145658263) 52%, rgba(6,6,6,0.9248074229691877) 100%);
+    position: fixed; top:0; width: 99vw; height: 70px;" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item">
+            <img src="https://www.worldsoccer.com/wp-content/uploads/sites/13/2015/10/Fifa-logo-at-Zurich-headquarters.gif"
+                width="90" height="50">
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+            <a style="color: rgb(128, 128, 128);" class="navbar-item" href="/">
+                <i class="fa-solid fa-house" style="margin-right: 5px;"></i>
+                Home
+            </a>
+            <% if(isLogin===true) { %>
+                <a style="color: rgb(128, 128, 128);" class="navbar-item" href="/players">
+                    <i class="fa-solid fa-person-walking" style="margin-right: 5px;"></i>
+                    Player
+                </a>
+                <a style="color: rgb(128, 128, 128);" class="navbar-item" href="/nations">
+                    <i class="fa-solid fa-earth-americas" style="margin-right: 5px;"></i>
+                    Nation
+                </a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a style="color: rgb(128, 128, 128);" class="navbar-link">
+                        More
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" href="/users/edit">
+                            Profile
+                        </a>
+                        <!-- <a class="fa-solid fa-person-walking" href="/players">
+                            Players Management
+                        </a>
+                        <a class="fa-solid fa-earth-americas" href="/nations">
+                            Nations Management
+                        </a> -->
+                        <!-- <a class="navbar-item" href="/users/logout">
+                            Logout
+                        </a> -->
+                    </div>
+                </div>
+
+
+                <% } %>
+
+        </div>
+        <% if(isLogin===true) { %>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button"
+                            style="background-color: rgba(128, 128, 128, 0.301) ; color: aliceblue; border-style: none;"
+                            href="/users/logout">
+                            <strong> <i class="fa-solid fa-right-to-bracket" style="margin-right: 5px;"></i>Log
+                                out</strong>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+    </div>
+    <% if(isLogin===false) { %>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button"
+                        style="background-color: rgba(128, 128, 128, 0.301) ; color: aliceblue; border-style: none;"
+                        href="/users/login">
+                        <strong> <i class="fa-solid fa-right-to-bracket" style="margin-right: 5px;"></i>Log in</strong>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <% } %>
+            </div>
+</nav>
